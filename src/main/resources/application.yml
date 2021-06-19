@@ -1,0 +1,16 @@
+server:
+  port: 8081
+  netty:
+    connection-timeout: 5s
+
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+
+catalog-service:
+  url: http://localhost:8080/books/
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
