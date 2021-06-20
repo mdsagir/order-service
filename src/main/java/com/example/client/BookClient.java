@@ -20,6 +20,8 @@ public class BookClient {
     private final WebClient webClient;
 
     public BookClient(BookClientProperties bookClientProperties, WebClient.Builder webClientBuilder) {
+
+        System.out.println("URI @@@@"+bookClientProperties.getUrl());
         this.webClient = webClientBuilder
                 .baseUrl(bookClientProperties.getUrl())
                 .build();

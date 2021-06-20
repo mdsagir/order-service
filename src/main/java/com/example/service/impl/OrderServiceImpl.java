@@ -40,9 +40,8 @@ public class OrderServiceImpl implements OrderService {
 
     private Order buildAcceptedOrder(Book book, int quantity) {
         return new Order(book.getIsbn(),
-                book.getTitle() + " - " + book.getAuthor(),
+                book.getTitle(),
                 book.getPrice(),
-
                 quantity,
                 OrderStatus.ACCEPTED);
     }

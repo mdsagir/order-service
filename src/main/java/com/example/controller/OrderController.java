@@ -4,10 +4,8 @@ import com.example.entity.Order;
 import com.example.entity.OrderRequest;
 import com.example.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -20,6 +18,16 @@ public class OrderController {
     @PostMapping
     public Mono<Order> submitOrder(@RequestBody OrderRequest orderRequest) {
         return orderService.submitOrder(orderRequest);
-
     }
+
+    @GetMapping
+    public Flux<Order> getOrder() {
+        return orderService.getAllOrder();
+    }
+
+    @GetMapping("/{id}")
+    public Mono<Order> getOrderById(@PathVariable Long id) {
+        return orderService.getOrder(id);
+    }
+
 }

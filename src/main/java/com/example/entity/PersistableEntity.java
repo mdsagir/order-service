@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class PersistableEntity {
@@ -15,10 +17,10 @@ public class PersistableEntity {
     private Long id;
 
     @CreatedDate
-    private Long createdDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
-    private Long lastModifiedDate;
+    private LocalDateTime modifiedDate;
 
     @Version
     private int version;

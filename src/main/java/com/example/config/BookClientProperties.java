@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import javax.validation.constraints.NotNull;
 
 @Data
-@ConfigurationProperties(prefix = "catalog-service")
+@ConfigurationProperties(prefix = "catalog")
 public class BookClientProperties {
 
     /**
