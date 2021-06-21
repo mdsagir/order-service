@@ -26,17 +26,10 @@ spec:
             - containerPort: 8081
           env:
             - name: CATALOG_URL
-              value: http://catalog-service/books/
-          volumeMounts:
-            - name: order-service-volume
-              mountPath: /workspace/config
+              value: http://catalog-service:8080/books/
           resources:
             requests:
               memory: "756Mi"
               cpu: "0.5"
             limits:
               memory: "756Mi"
-      volumes:
-        - name: order-service-volume
-          configMap:
-            name: order-service-config-map
