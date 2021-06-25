@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.function.Consumer;
+
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final BookClient bookClient;
+    private final Consumer<Order> acceptedOrderConsumer;
     private final OrderRepository orderRepository;
 
     @Override
@@ -25,7 +28,8 @@ public class OrderServiceImpl implements OrderService {
         return bookClient.getBookByIsbn(orderRequest.getIsbn())
                 .flatMap(book -> Mono.just(buildAcceptedOrder(book, orderRequest.getQuantity())))
                 .defaultIfEmpty(buildRejectedOrder(orderRequest.getIsbn(), orderRequest.getQuantity()))
-                .flatMap(orderRepository::save);
+                .flatMap(orderRepository::save)
+                .doOnNext(acceptedOrderConsumer);
     }
 
     @Override
@@ -36,6 +40,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Flux<Order> getAllOrder() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        orderRepository.findById(orderId)
+                .map(order -> {
+                    order.setStatus(status);
+                    return order;
+                })
+                .flatMap(orderRepository::save)
+                .subscribe();
     }
 
     private Order buildAcceptedOrder(Book book, int quantity) {

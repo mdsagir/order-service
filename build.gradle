@@ -8,11 +8,18 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
 }
 
 ext {
+	set('springCloudVersion', "2020.0.3")
 	set('testcontainersVersion', "1.15.2")
 }
 
@@ -20,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
 
 	implementation group: 'io.r2dbc', name: 'r2dbc-pool', version: '0.8.6.RELEASE'
 	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.6'
@@ -38,10 +46,20 @@ dependencies {
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:r2dbc'
 
+	testImplementation("org.springframework.cloud:spring-cloud-stream") {
+		artifact {
+			name = "spring-cloud-stream"
+			extension = "jar"
+			type ="test-jar"
+			classifier = "test-binder"
+		}
+	}
+
 }
 
 dependencyManagement {
 	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
 	}
 }

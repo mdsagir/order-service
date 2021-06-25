@@ -7,9 +7,30 @@ server:
 spring:
   lifecycle:
     timeout-per-shutdown-phase: 15s
-
+  cloud:
+    function:
+      definition: acceptOrder;dispatchOrder
+    stream:
+      bindings:
+        dispatchOrder-in-0:
+          destination: order-dispatched
+          group: polar-updater
+        acceptOrder-out-0:
+          destination: order-accepted
+      rabbit:
+        bindings:
+          order-accepted:
+            producer:
+              transacted: true
+  rabbitmq:
+    host: 35.192.18.170
+    port: 5672
+    username: test
+    password: test
+    connection-timeout: 15s
 catalog:
   url: http://localhost:8080/books/
 springdoc:
   swagger-ui:
     path: /swagger-ui
+logging.level.reactor.core.*: debug
