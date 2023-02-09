@@ -17,7 +17,6 @@ public class BookClient {
     public BookClient(WebClient webClient) {
         this.webClient = webClient;
     }
-
     public Mono<Book> getBookByIsbn(String isbn) {
         return webClient
                 .get()
