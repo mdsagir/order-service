@@ -37,9 +37,6 @@ dependencies {
     runtimeOnly 'org.postgresql:r2dbc-postgresql'
     runtimeOnly 'org.springframework:spring-jdbc'
 
-    // Only on Apple Silicon. Why it's necessary: https://github.com/netty/netty/issues/11020
-    // runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.85.Final:osx-aarch_64'
-
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -55,7 +52,6 @@ dependencies {
 
 
 bootBuildImage {
-    builder = "ghcr.io/thomasvitale/java-builder-arm64"
     imageName = "${project.name}"
     environment = ["BP_JVM_VERSION": "17.*"]
 
@@ -63,13 +59,6 @@ bootBuildImage {
         builder = "ghcr.io/thomasvitale/java-builder-arm64"
     }
 
-//    docker {
-//        publishRegistry {
-//            username = project.findProperty("registryUsername")
-//            password = project.findProperty("registryToken")
-//            url = project.findProperty("registryUrl")
-//        }
-//    }
 }
 dependencyManagement {
     imports {
