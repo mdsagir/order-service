@@ -1,4 +1,4 @@
-package com.polarbookshop.orderservice.order.config;
+package com.polarbookshop.orderservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
